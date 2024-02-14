@@ -17,12 +17,32 @@
   box-sizing: border-box;
   font-family: gilroy-medium;
   user-select: none;
+  font-weight: 100;
+  letter-spacing: 0.1px;
 }
 
  html,body {
   height: 100%;
   width: 100%;
+  background-color: #123;
+
 }
+
+.loader{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-50%); 
+    background-color:white;
+    z-index: 100;
+   
+}
+
 .main{
   height: 100vh;
   width: 100%;
@@ -30,11 +50,13 @@
 
 .topbar{
     height: 50px;
-    background: #e5e2e2;
+    background-color: #123;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 1vw 2vw;
+    box-shadow: 2px 2px 8px black;
+    color: white;
 }
 
 .hamburger-icon {
@@ -44,6 +66,7 @@
     justify-content: space-between;
     height: 20px;
     width: 30px;
+    
 }
 
 .profile-logo{
@@ -51,15 +74,18 @@
     width: 40px;
     background: #000;
     border-radius: 100%;
+    border: 2px solid white;
 }
 .bar{
-    background-color: #333;
-    height: 4px;
+    background-color: white;
+    height: 3px;
     width: 30px;
+    border-radius: 20px;
 }
   
 .home-main{
     height: calc(100vh - 50px);
+
 }
 
 .home-main-container{
@@ -75,16 +101,22 @@
     height: 100%;
     width: 100%;
     overflow-y: scroll;
-    background-color: rgba(0, 0, 255, 0.285);
     display: flex;
     justify-content: right;
-  
    
 }
+.screen::-webkit-scrollbar {
+    width: 4px; 
+    border-radius: 20px;
+  }
 
+.screen::-webkit-scrollbar-thumb{
+    background-color: rebeccapurple;
+    border-radius: 20px;
+}
 .dynamic{ 
     width: calc(100% - 18em);
-    border: 1px solid red;
+    /* width: 100%; */
     flex-shrink: 100;
 }
 
@@ -93,7 +125,15 @@
     
         width: 100%;
         height: 100%;
-        border: 1px solid red;
+    }
+    
+}
+
+@media (max-width:800px) {
+    .dynamic{
+    
+        width: 95%;
+        height: 100%;
     }
     
 }

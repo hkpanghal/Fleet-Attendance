@@ -15,26 +15,74 @@ box-sizing: border-box;
   align-items: center;
   justify-content: center;
   padding: 2vw 4vw;
+  flex-direction: column;
+  gap: 2vw;
 }
 .signUpForm , .signInForm{
   width: fit-content;
-  border: 2px solid black;
+  /* border: 2px solid black; */
+  box-shadow: 10px 20px 80px black;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2vw 4vw;
+  padding: 5vh 5vw;
   flex-direction: column;
-  gap: 1vw;
+  gap: 2vh;
+  border-radius: 10px;
+  
 }
 .signUpInputs, .signInInputs{
-  padding: 1rem 2rem;
+  padding: 1rem;
   border-radius: 0.5rem;
-  border: 2px solid #dadada;
+  /* border: 2px solid #dadada; */
+  color: white;
+  background-color: #123;
+  box-shadow: 2px 2px 8px black;
+  width: 20em;
 }
 
 .signUpForm button, .signInForm button{
   padding: 0.5rem 2rem;
   border-radius: 0.5rem;
-  border: 1px solid #dadada;
-  
+  /* border: 1px solid #dadada; */
+  background: #123;
+  box-shadow: 2px 2px 8px black;
+  color: white;
+}
+
+.signUpForm button:hover{
+  cursor: pointer;
+  background:rgb(20, 54, 88);
+}
+ .signInForm button:hover{
+  cursor: pointer;
+  background:rgb(20, 54, 88);
+}
+
+
+.signUpBox .bottom-area , .signInBox .top-area{
+   color: white;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 1em;
+}
+
+.bottom-area button,.top-area button{
+  padding: 0.5rem 2rem;
+  border-radius: 0.5rem;
+  /* border: 1px solid #dadada; */
+  background-color: #123;
+  box-shadow: 2px 2px 8px black;
+  color: white;
+}
+
+.bottom-area button:hover{
+  cursor: pointer;
+  background:rgb(20, 54, 88);
+}
+
+.top-area button:hover{
+  cursor: pointer;
+  background:rgb(20, 54, 88);
 }

@@ -2,7 +2,10 @@ import React from 'react'
 
 function Profile() {
   return (
-    <div className='profile dynamic'>Profile</div>
+    
+    <div className='profile dynamic'>
+      
+    </div>
   )
 }
 

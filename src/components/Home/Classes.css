@@ -13,23 +13,102 @@ box-sizing: border-box;
     padding:2vw ;
     position: relative;
     height: fit-content;
+    color: white;
+    /* border: 20px solid red; */
+    /* min-width: 100%; */
+    /* width: 100%; */
 }
 
 .classes ol{
     list-style: none;
+    margin: 3.5em 0;
 }
 .classes ol li{
     padding: 0.5em 1.2em;
-    border: 1px solid black;
-    font-size: 2em;
+    /* border: 1px solid #dadada; */
+    font-size: medium;
     border-radius: 10px;
-    margin: 0.5em 0;
+    margin: 1em 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    /* background-color: #000; */
+    box-shadow: 1px 1px 8px blue;
+   
+}
+.classes ol li .class-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row-reverse;
+    gap: 0.5em;
+    width: 80%;
+    justify-content: space-between;
+    height: 100%;
 }
 .classes ol li:hover{
     cursor: pointer;
+    border: 2px solid white;
+}
+
+.classes ol li .class-section input{
+   text-decoration: none;
+   user-select: none;
+   text-align: center;
+   border: none;
+   background-color:lightseagreen;
+   color: white;
+   outline-style: none;
+   font-size: large;
+   width: 100%;
+   height: 3.5em;
+   border-radius: 10px;
+   color: #000;
+   font-style: italic;
+}
+.classes ol li .students-section{
+    background-color: rebeccapurple;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5em;
+    height: 5em;
+    border-radius: 10px;
+    flex-direction: column;
+}
+
+.classes ol li .students-section:hover{
+    background-color: blueviolet;
+}
+.classes ol li .students-section .st-logo{
+    font-size: xx-large;
+    
+}
+
+
+.classes ol li .class-section .btns{
+    display: flex;
+    gap: 0.5em;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+}
+.classes ol li .btns button{
+    padding: 0.5em;
+    border: none;
+    border-radius: 10px;
+    /* font-size: 1vw; */
+    background-color: #000;
+
+}
+.classes ol li .btns button:hover{
+    cursor: pointer;
+    background-color: rebeccapurple;
+    
 }
 .add-search-container{
-    border: 1px solid black;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -46,21 +125,63 @@ box-sizing: border-box;
     border-radius: 10px;
     width: 100%;
     border: 2px #dadada;
-    background-color: aqua;
     font-size: medium;
-    
+    box-shadow: 2px 2px 8px black;
+    background-color: #123;
+    color: white;
+    box-shadow: 0.5px 0.5px 10px yellow;
 }
 .add-search-container button{
     padding: 1.2em 1.2em;
     border-radius: 100%;
     border: none;
     font-size: medium;
-} 
+    background-color:lightblue;
+    /* border: 3px solid black; */
+    box-shadow: 1px 1px 10px green;
+}  
 
 .add-search-container button:hover{
     cursor: pointer;
+    background-color:rebeccapurple;
 }
 
 @media (max-width:700px){
+
+    .classes{
+        padding:3vw 0;
+    }
+    .classes ol li{
+        padding: 0.2em;
     
+        font-size: small;
+        border-radius: 10px;
+        margin: 1.5em 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: row;
+    }
+    .classes ol li:hover{
+        cursor: pointer;
+    }
+    .classes ol li .class-section input{
+        font-size: large;
+        width: 100%;
+        height: 3.5em;
+        
+     }
+    /* .classes ol li .btns{
+        display: flex;
+        gap: 0.5em;
+        background: #000;
+        width: 50%;
+    } */
+    /* .classes ol li .btns button{
+        width: 50%;
+        padding: 1.9vw 2.9vw;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+    } */
 }

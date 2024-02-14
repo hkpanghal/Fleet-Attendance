@@ -13,7 +13,7 @@ function AccountVerification() {
   promise.then(
     function (response) {
       console.log(response);
-      navigate(`/Home/:${"Classes"}`)
+      navigate(`/Home/Clases/:${"Classes"}`)
     },
     function (error) {
         console.log(error);

@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import Sidebar from "./Sidebar";
+import { checkDisplay , setDisplay } from "./handleSidebar";
 
 const HamburgerIcon = () => {
-  // console.log(window.innerWidth);
-  const [displaySidebar, setDisplaySidebar] = useState(window.innerWidth <= 700?false:true);
+  
   const handleSidebar = () => {
+
+    
     let sidebar = document.querySelector(".sidebar");
     let dynamicView = document.querySelector(".dynamic-view");
-    if (displaySidebar) {
+    if (checkDisplay()) {
    
         gsap.to(sidebar,{
             x:"-100%",
@@ -15,15 +18,16 @@ const HamburgerIcon = () => {
         
         
       dynamicView.style.justifyContent = "center";
-      setDisplaySidebar(false);
+
     } else {
         gsap.to(sidebar,{
             x:"0",
          })
       dynamicView.style.justifyContent = "flex-end";
-      setDisplaySidebar(true);
     }
+    setDisplay();
   };
+
 
   
   return (

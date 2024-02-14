@@ -8,3 +8,18 @@ box-sizing: border-box;
   height: 100%;
   width: 100%;
 }
+
+.loader{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 50%;
+  left:50%;
+  transform: translate(-50%,-50%); 
+  background-color:white;
+  z-index: 100;
+ 
+}

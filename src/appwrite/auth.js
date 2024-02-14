@@ -30,7 +30,29 @@ const signIn = async (user) => {
         console.log(error)
         return false;
       }
+    }
+
+const getCurrentUser = async() => {
+  try {
+    return await account.get();
+} catch (error) {
+    console.log("Appwrite serive :: getCurrentUser :: error", error);
+}
+
+return null;
 
 }
 
-export {signIn,signUp}
+const logOut = async() => {
+
+    try{
+        await account.deleteSessions();
+    } catch (error) {
+        console.log("Appwrite serive :: logout :: error", error);
+    }
+   
+}
+
+
+
+export {signIn,signUp , getCurrentUser,logOut}

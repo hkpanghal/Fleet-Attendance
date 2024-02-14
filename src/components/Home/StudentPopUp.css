@@ -9,7 +9,7 @@ box-sizing: border-box;
   width: 100%;
 }
 
-.add-classes{
+.spopup-conatiner{
     height: 20em;
     width: 25em;
     position: absolute;
@@ -21,10 +21,26 @@ box-sizing: border-box;
     border: 2px solid #dadada;
     background-color: rgba(17, 34, 51, 0.33);
     backdrop-filter: blur(20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.5em;
     z-index: 1000;
+    color: white;
 }
 
-.remove-pop-up{
+.spopup-conatiner input{
+    width: 80%;
+    padding: 1.2em;
+    font-size: medium;
+    border-radius: 10px;
+    background: #123;
+    box-shadow: 2px 2px 8px black;
+    color: white;   
+}
+
+.spopup-conatiner .removebtn{
     position: absolute;
     background: #000;
     text-align: right;
@@ -33,50 +49,25 @@ box-sizing: border-box;
     padding: 0.5em;
     border-radius: 100%;
     box-shadow: 8px 8px 8px black;
-    border: 2px solid #dadada;
-
+    border: 2px solid #dadada;   
 }
 
-.remove-pop-up:hover{
-    cursor: pointer;
-    background: #123;
-}
-
-.add-class-box{
-    height: 100%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 1em;
-    
-}
-
-.input-add-class{
-    width: 80%;
-    padding: 1.2em;
-    font-size: medium;
-    border-radius: 10px;
-    background: #123;
-    box-shadow: 2px 2px 8px black;
-    color: white;
-}
-.add-class-btn{
+.spopup-conatiner .addbtn{
     background: #123;
     box-shadow: 2px 2px 8px black;
     padding: 1.2em 3.5em;
     border-radius: 10px;
     color: white;
 }
-.add-class-btn:hover{
-    background:rgb(20, 54, 88);
-    cursor: pointer;
-}
+
 @media (max-width:450px){
-    .add-classes{
+    .spopup-conatiner{
         height: 20em;
         width: 20em;
        
+    }
+
+    .spopup-conatiner input{
+        padding: 1em;
     }
 }
