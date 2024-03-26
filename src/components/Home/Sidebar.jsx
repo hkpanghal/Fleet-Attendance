@@ -1,14 +1,18 @@
-import React, { useState } from "react";
-import { useNavigate ,NavLink} from "react-router-dom";
-import { setDisplay } from "./handleSidebar";
+import React from "react";
+import {NavLink} from "react-router-dom";
+import { setDisplay } from "../../utils/handleSidebar";
 import image from '../../assets/applogo.png'
 import './Sidebar.css'
+
+const activeStyle = {
+  border: '2px solid white', 
+  background:"rebeccapurple"
+};
+
+
 function Sidebar() {
-  const navigate = useNavigate()
-  const activeStyle = {
-    border: '2px solid white', 
-    background:"rebeccapurple"
-  };
+
+
 
   const handleSidebar = () => {
 
@@ -34,10 +38,10 @@ function Sidebar() {
 
       <div className="sidebar-lower-part">
         <ol>
-          <li ><NavLink className="navLink" to={`/Home/Classes/:${'Classes'}`} style={({isActive}) => isActive? activeStyle: {background:"#123"}  }>Classes</NavLink></li>
-          <li ><NavLink className="navLink" to={`/Home/History/:${"History"}`} style={({isActive}) => isActive? activeStyle: {background:"#123"}  }>History</NavLink></li>
-          <li ><NavLink className="navLink" to={`/Home/Profile/:${"Profile"}`} style={({isActive}) => isActive? activeStyle: {background:"#123"} }>Profile</NavLink></li>
-          <li ><NavLink className="navLink" to={`/Home/Logout/:${"Logout"}`}   style={({isActive}) => isActive? activeStyle: {background:"#123"} }>Log out</NavLink></li>
+          <li ><NavLink className="navLink" to={`/`} style={({isActive}) => isActive? activeStyle: {background:"#123"}  }>Classes</NavLink></li>
+          <li ><NavLink className="navLink" to={`/History`} style={({isActive}) => isActive? activeStyle: {background:"#123"}  }>History</NavLink></li>
+          <li ><NavLink className="navLink" to={`/Profile`} style={({isActive}) => isActive? activeStyle: {background:"#123"} }>Profile</NavLink></li>
+          <li ><NavLink className="navLink" to={`/Logout`}   style={({isActive}) => isActive? activeStyle: {background:"#123"} }>Log out</NavLink></li>
         </ol>
        
       </div>

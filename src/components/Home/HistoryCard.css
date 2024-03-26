@@ -1,0 +1,69 @@
+
+.historyCard{
+    height: 15em;
+    width: 15em;
+    border: 2px solid rebeccapurple;
+    border-radius: 10px;
+    box-shadow: 8px 8px 10px black;
+    transition: scale ease 0.25s;
+}
+.historyCard:hover{
+   background-color: black;
+   cursor: pointer;
+   scale: 1.02;
+}
+
+.historyCard .upper{
+    height: 80%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.historyCard .upper p{
+  color: white;
+}
+.historyCard .bottom{
+    height: 20%;
+    background-color: slateblue;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.historyCard .bottom h3{
+    width: 70%;
+    text-align: center;
+    color: white;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+    overflow: hidden;
+}
+
+@media (max-width:700px) {
+  .historyCard{
+    height: 10em;
+    width: 10em;
+  }
+   .historyCard .bottom h3{
+      width: 70%;
+      text-align: center;
+      font-size: medium;
+      color: white;
+      text-overflow: ellipsis;
+      text-wrap: nowrap;
+      overflow: hidden;
+   
+  }
+  
+
+  
+}
+
+@media (max-width:800px) {
+  
+  
+}

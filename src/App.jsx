@@ -1,42 +1,33 @@
-import React, { Children, useEffect, useState } from 'react'
-import { getCurrentUser } from './appwrite/auth'
-import { RingLoader } from 'react-spinners'
-import "./App.css"
-import { Navigate, useNavigate } from 'react-router-dom'
-import ProtectedRoute from './protected/ProtectedRoute'
-import Home from './components/Home/Home'
-function App({Children}) {
-  const navigate = useNavigate()
-  const [loader,setLoader] = useState(false)
-  const [user,setUser] = useState({
-    id:null,name:null,email:null,status:null
-  })
+import React, { useContext, useEffect} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { authContext } from "./Contexts/AuthContext";
+import AppStack from "./Router/AppStack";
+import AuthStack from "./Router/AuthStack";
+import { fetchDetails } from "./Slices/userDetailsSlice";
+import Loader from "./components/Home/Loader";
 
-  // useEffect(() =>{
-  //  getCurrentUser().then((res)=>{
-    
-  //   if(res){
-  //     setUser({id:res.$id,name:res.name,email:res.email,status:res.status})
-      
-  //     if(res.status){
-  //       setLoader(false)
-  //      }
-     
-  //   }
-  //   else{
-  //     navigate("/SignUp")
-  //   }
-  //  })
-  // },[])
+function App() {
+  const isLoading = useSelector((state) => state.user.isLoading);
+  const { isLoggedIn, setIsLoggedIn } = useContext(authContext);
+  const isLoggedin = useSelector((state) => state.user.isLoggedIn);
+  const user_details = useSelector((state) => state.user.details);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(fetchDetails());
+  }, []);
 
-useEffect(() =>{
-  if(loader === false){
-    navigate(`/Home/Classes/:${'Classes'}`)
- }
-} ,[])
-  return loader?<div className="loader" style={{visibility:loader===true?"visible":"hidden"}}> <RingLoader /></div>:Children
-  
+  useEffect(() => {
+    if (isLoggedin) {
+      setIsLoggedIn(isLoggedin);
+    }
+  }, [isLoading]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  return isLoggedIn ? <AppStack /> : <AuthStack />;
 }
 
-export default App
+export default App;

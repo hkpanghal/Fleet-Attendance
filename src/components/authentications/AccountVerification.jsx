@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { account } from "../../appwrite/appwriteConfig";
 
 
 function AccountVerification() {
@@ -13,7 +12,7 @@ function AccountVerification() {
   promise.then(
     function (response) {
       console.log(response);
-      navigate(`/Home/Clases/:${"Classes"}`)
+      navigate(`/Home/Classes/:${"Classes"}`)
     },
     function (error) {
         console.log(error);

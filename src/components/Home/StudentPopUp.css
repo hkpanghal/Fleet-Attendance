@@ -1,16 +1,6 @@
-* {
-  margin: 0;
-  padding: 0;
-box-sizing: border-box;
-}
-
- html,body {
-  height: 100%;
-  width: 100%;
-}
 
 .spopup-conatiner{
-    height: 20em;
+    height: 25em;
     width: 25em;
     position: absolute;
     top: 25vh;
@@ -62,7 +52,7 @@ box-sizing: border-box;
 
 @media (max-width:450px){
     .spopup-conatiner{
-        height: 20em;
+        height: 25em;
         width: 20em;
        
     }

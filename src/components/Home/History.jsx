@@ -1,22 +1,25 @@
-import React from 'react'
+import React, { useEffect } from "react";
+import "./History.css";
+import HistoryCard from "./HistoryCard";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchClasses } from "../../Slices/classesSlice";
 
 function History() {
-  const toggleFullScreen = () => {
-    const elem = document.documentElement;
-    if (!document.fullscreenElement) {
-      elem.requestFullscreen().catch((err) => {
-        console.error(`Error attempting to enable full-screen mode: ${err.message}`);
-      });
-    } else {
-      document.exitFullscreen();
-    }
-  };
+  const classes = useSelector((state) => state.class.classes);
+  const userDetails = useSelector((state) => state.user.details)
 
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchClasses(userDetails._id));
+  }, []);
   return (
-    <button onClick={toggleFullScreen}>
-      {document.fullscreenElement ? 'Exit Full Screen' : 'Full Screen'}
-    </button>
+    <>
+      <div className="history dynamic">
+        {classes &&
+          classes.map((Class) => <HistoryCard data={Class} key={Class._id} />)}
+      </div>
+    </>
   );
 }
 
-export default History
+export default History;

@@ -1,0 +1,18 @@
+
+.history{
+   
+   height: fit-content;
+   padding: 2vw;
+   display: flex;
+   flex-wrap: wrap;
+   gap: 4vw;
+   align-items: center;
+   justify-content: space-around
+
+}
+
+@media (max-width:700px) {
+  .history{
+   width: 100%;
+ }
+}

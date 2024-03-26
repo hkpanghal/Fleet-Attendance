@@ -1,48 +1,101 @@
-import React, { useState } from 'react'
-import "./StudentPopUp.css"
-import { v4 as uuidv4 } from "uuid";
-import { useDispatch } from 'react-redux';
-import { addStudent } from '../../Slices/studentsSlice';
-import { useParams } from 'react-router-dom';
-import { addelemStudentArray } from '../../Slices/classesSlice';
-function StudentPopUp({stpopup,setStpopup}) {
+import React, { useState } from "react";
+import "./StudentPopUp.css";
+import { useDispatch, useSelector } from "react-redux";
+import { addStudent } from "../../Slices/studentsSlice";
+import { useParams } from "react-router-dom";
+import { addelemStudentArray } from "../../Slices/classesSlice";
+import { addStudentToDb } from "../../backend/backend";
 
- const { text1, text2 } = useParams();
- const [customError,setCustomError] = useState("")
- const [stdata,setStdata] = useState({
-    id:uuidv4(),
-    cid:text2.substring(1),
-    uid:null,
-    name:"",
-    rollNumber:"",
-    isPresent:false,
-    dateCreated:Date(Date.now()).toLocaleString(),
- })
 
- const dispatch = useDispatch();
- function adMoreStudent(){
-    dispatch(addStudent(stdata));
-    dispatch(addelemStudentArray({id:stdata.cid,sid:stdata.id}))
-    setStdata({
-        id:uuidv4(),
-        cid:text2.substring(1),
-        uid:null,
-        name:"",
-        rollNumber:"",
-        isPresent:false,
-        dateCreated:Date(Date.now()).toLocaleString(),
-     });
- }
+function StudentPopUp({ stpopup, setStpopup }) {
+  const { class_id } = useParams();
+  const [customError, setCustomError] = useState("");
+  const [first_name, setFirst_name] = useState("");
+  const [last_name, setLast_name] = useState("");
+  const [roll_number, setRoll_number] = useState("");
+  const userDetails = useSelector((state) => state.user.details)
+  const dispatch = useDispatch();
+  const [loading,setIsLoading] = useState(false)
+  function adMoreStudent() {
+   
+    setIsLoading(true);
+
+    addStudentToDb(
+      class_id,
+      userDetails._id,
+      first_name,
+      last_name,
+      roll_number
+    )
+      .then((res) => {
+        if (res.data.success) {
+          dispatch(addStudent({ data: res.data.student }));
+          dispatch(
+            addelemStudentArray({
+              class_id: res.data.student.class_belongs,
+              student_id: res.data.student._id,
+            })
+          );
+          setIsLoading(false);
+          setFirst_name("");
+          setLast_name("");
+          setRoll_number("");
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        alert("some error occurred while creating the student")
+        console.log(err);
+      });
+  }
   return (
-    <div className='spopup-conatiner' style={stpopup === true? {display:"flex"} : {display:"none"}}>
-        <button className='removebtn' onClick={() => setStpopup(false)}>❌</button>
-        <input type="text" placeholder='enter student name'onChange={(e)=> setStdata((prev) => ({...prev,name:(e.target.value)}))} value={(stdata.name)}/>
-        <input type="text" placeholder='enter roll number' onChange={(e)=> setStdata((prev) => ({...prev,rollNumber:e.target.value}))} value={stdata.rollNumber}/>
-        <button className='addbtn' onClick={()=> stdata.name && stdata.rollNumber? (adMoreStudent(),setCustomError("")): (stdata.name?setCustomError("missing roll number field"):setCustomError("missing name field"))}>Add</button>
+    <div
+      className="spopup-conatiner"
+      style={stpopup === true ? { display: "flex" } : { display: "none" }}
+    >
+      <button className="removebtn" onClick={() => setStpopup(false)}>
+        ❌
+      </button>
+      <input
+        type="text"
+        placeholder="enter first name"
+        onChange={(e) =>
+          setFirst_name(e.target.value)
+        }
+        value={first_name}
+      />
+      <input
+        type="text"
+        placeholder="enter last name"
+        onChange={(e) =>
+          setLast_name(e.target.value)
+        }
+        value={last_name}
+      />
+      <input
+        type="text"
+        placeholder="enter roll number"
+        onChange={(e) =>
+          setRoll_number(e.target.value)
+        }
+        value={roll_number}
+      />
+      <button
+        className="addbtn"
+        onClick={() =>
+          first_name && roll_number
+            ? (adMoreStudent(), setCustomError(""))
+            : first_name
+            ? setCustomError("missing roll number field")
+            : setCustomError("missing first_name field")
+        }
+      >
+        Add
+      </button>
 
-        <p>{customError}</p>
+      <p>{customError}</p>
     </div>
-  )
+  );
 }
 
-export default StudentPopUp
+export default StudentPopUp;

@@ -1,17 +1,6 @@
-* {
-  margin: 0;
-  padding: 0;
-box-sizing: border-box;
-
-}
-
- html,body {
-  height: 100%;
-  width: 100%;
-}
 
 .helper-container{
-    /* border: 1px solid red; */
+ 
     width: 90%;
     height: 50vh;
     display: flex;
@@ -21,10 +10,9 @@ box-sizing: border-box;
 }
 
 .helper-container h1{
-    /* background: rebeccapurple; */
     text-align: center;
     font-size: x-large;
-    /* line-height: 0; */
+    
 }
 .helper-container h1 span{
    display: inline-block;

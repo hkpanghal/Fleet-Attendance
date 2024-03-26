@@ -9,7 +9,7 @@ function generateAttendancePDF(attendanceData,className,subject) {
     let count = 1;
     let present = 0;
     let absent = 0;
-    attendanceData.map((student) => student.isPresent == true? present++:absent++)
+    attendanceData.map((student) => student.is_present == true? present++:absent++)
     const docDefinition = {
       content: [
         { text: "Attendance Report", style: 'header' },
@@ -23,7 +23,7 @@ function generateAttendancePDF(attendanceData,className,subject) {
 
             body: [
               [{ text: 'Sr No.', style: 'tableHeader' },{ text: 'Roll Number', style: 'tableHeader' },{ text: 'Student Name', style: 'tableHeader' },{ text: 'Status', style: 'tableHeader' }],
-              ...attendanceData.map(attendance => [{ text: count++, style: 'dataCell' },{text:attendance.rollNumber,style:'dataCell'},{text:attendance.name,style:'dataCell'},{text: attendance.isPresent === true ? "Present" :"Absent",   style: attendance.isPresent === true ? 'presentStyle' : 'absentStyle' }]),
+              ...attendanceData.map(attendance => [{ text: count++, style: 'dataCell' },{text:attendance.roll_number,style:'dataCell'},{text:attendance.first_name + " " + attendance.last_name,style:'dataCell'},{text: attendance.is_present === true ? "Present" :"Absent",   style: attendance.is_present === true ? 'presentStyle' : 'absentStyle' }]),
             ],
           },
         },

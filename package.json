@@ -15,6 +15,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@reduxjs/toolkit": "^2.1.0",
     "appwrite": "^13.0.1",
+    "axios": "^1.6.8",
     "node-appwrite": "^11.1.0",
     "pdfmake": "^0.2.9",
     "react": "^18.2.0",

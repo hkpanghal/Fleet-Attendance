@@ -1,5 +1,4 @@
 import React from 'react'
-import { logOut } from '../../appwrite/auth'
 function LogOut() {
   return (
     <div className='logout dynamic'>

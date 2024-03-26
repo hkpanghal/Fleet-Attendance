@@ -1,6 +1,10 @@
-import React, { useState } from 'react'
-import { signIn } from '../../appwrite/auth';
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { authContext } from '../../Contexts/AuthContext';
+import { signin } from '../../backend/auth';
+import Loader from '../Home/Loader';
+import { useDispatch } from 'react-redux';
+import { fetchDetails } from '../../Slices/userDetailsSlice';
 
 function SignIn() {
     const navigate = useNavigate()
@@ -9,17 +13,49 @@ function SignIn() {
     password:"",
   })
 
+  const {isLoggedIn,setIsLoggedIn} = useContext(authContext)
+  const [isLoading,setIsLoading] = useState(false)
+  const [err,setErr] = useState("")
+
+  const dispatch = useDispatch()
+
+  const storeData = async (key, value) => {
+    try {
+      await localStorage.setItem(key, JSON.stringify(value));
+      dispatch(fetchDetails())
+      console.log('Data stored successfully!');
+    } catch (error) {
+      console.log('Error storing data: ' + error);
+    }
+  };
+
+
   const signInUser = async (e)=> {
     e.preventDefault();
-   if(await signIn(user) === true)
-   {
-     navigate(`/Home/Classes/:${'Classes'}`)
-   }
-   else if(await signIn(user) === false){
-    console.log("some unexpectecd error")
-   }
+    
+    
+    setIsLoading(true)
+    signin(user.email,user.password)
+    .then((res) => {
+      if(res.data.success){
+        storeData("user_data",res.data.user)
+        setIsLoading(false)
+        setIsLoggedIn(true)
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+      setIsLoading(false)
+      setErr("Some error occurred while signing in")
+    })
+            
   }
   
+  if(isLoading){
+      return <Loader />
+    }
+
+
   return (
     <>
     <div className="signInBox">
@@ -36,6 +72,7 @@ function SignIn() {
      <div className='bottom-area'>
       <button onClick={()=> navigate("/SignUp")}>forgot password?</button>
      </div>
+      <p>{err}</p>
     </div>
     </>
   );

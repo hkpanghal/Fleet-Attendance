@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
-import Sidebar from "./Sidebar";
-import { checkDisplay , setDisplay } from "./handleSidebar";
+import { checkDisplay , setDisplay } from "../../utils/handleSidebar";
 
 const HamburgerIcon = () => {
   

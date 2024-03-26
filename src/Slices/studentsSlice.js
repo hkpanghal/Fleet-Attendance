@@ -1,53 +1,86 @@
 import { createSlice,nanoid } from "@reduxjs/toolkit";
-import { delelemStudentArray } from "./classesSlice";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { getAllStudents } from "../backend/backend.js";
 
 const initialState = {
-    students:[]
+    students:[],
+    isLoading:true,
+    isError:false,
 }
+
+export const fetchStudents = createAsyncThunk("fetchStudents", async ({class_id,user_id}) => {
+
+    // console.log(class_id,user_id)
+    let data = []
+    await getAllStudents(class_id,user_id)
+    .then((res) => {
+        // console.log(res.data.students)
+        if(res.data.success){
+            data = res.data.students
+        }
+    })
+    .catch((err => {
+        console.log(err)
+       
+    }))
+
+    return data
+})
 
 export const studentSlice = createSlice({
     name:"student",
     initialState,
     reducers:{
         addStudent: (state,action) => {
-            const student = {
-                id:action.payload.id,
-                cid:action.payload.cid,
-                uid:action.payload.uid,
-                name:action.payload.name,
-                rollNumber:action.payload.rollNumber,
-                isPresent:action.payload.isPresent,
-                dateCreated:action.payload.dateCreated,
-                contentEditable:false,
-
-            }
-            state.students.push(student);
+         
+            state.students.push(action.payload.data);
         },
         deleteStudent:  (state,action) => {
             
-            state.students = state.students.filter((student) => student.id !== action.payload)
+            state.students = state.students.filter((student) => student._id !== action.payload.student_id)
             
         },
 
-        setContentEditable: (state,action) => {
-            state.students.map((student) => student.id === action.payload.id ? student.contentEditable = action.payload.contentEditable : student)
-        },
+     
         updateStudent:(state,action)=>{
-            state.students.map((student) => student.id === action.payload.id ? (student.name = action.payload.name,student.rollNumber=action.payload.rollNumber) : student)
+
+            // console.log(action.payload.student_id,action.payload.first_name,action.payload.last_name,action.payload.roll_number)
+            state.students.map((student) => student._id === action.payload.student_id ? (student.first_name = action.payload.first_name,student.last_name=action.payload.last_name,student.roll_number=action.payload.roll_number) : student)
+
         },
         switchIsPresent:(state,action) =>{
-            state.students.map((student) => student.cid === action.payload.cid? student.isPresent = action.payload.isPresent : student)
+            state.students.map((student) =>  student.is_present = action.payload.is_present )
         },
 
         markIsPresent:(state,action) =>{
-            console.log(action.payload.sid)
-
-            state.students.map((student) => student.id === action.payload.sid? student.isPresent = action.payload.isPresent : student)
+            // if(state.students[action.payload.index]._id === action.payload._id){
+            //     state.students[action.payload.index].is_present = action.payload.is_present  
+            // }
+            state.students.map((student) => student._id === action.payload._id? student.is_present = action.payload.is_present : student)
         },
         
         deleteStudentsWhenClassIsDeleted:(state,action) => {
             state.students = state.students.filter((student) => student.cid !== action.payload.cid);
-        }
+            localStorage.setItem("students",JSON.stringify(state.students));
+
+        },
+
+    
+    },
+    extraReducers: (builder) =>{
+        builder.addCase(fetchStudents.fulfilled,(state,action) => {
+            state.isLoading = false;
+          
+            state.students = action.payload
+        })
+        builder.addCase(fetchStudents.rejected,(state,action) => {
+            state.isError = true;
+            state.isLoading = false;
+
+        })
+        builder.addCase(fetchStudents.pending,(state,action) => {
+            state.isLoading = true;
+        })
     }
 })
 

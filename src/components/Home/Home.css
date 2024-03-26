@@ -1,47 +1,3 @@
-@font-face {
-    font-family: mazius;
-    src: url("../../../Mazius-Extraitalic.121a71a7.otf");
-}
-@font-face {
-    font-family: gilroy-medium;
-    src: url("../../../Gilroy-Medium.e7e7c091.ttf");
-}
-@font-face {
-    font-family: gilroy-semi;
-    src: url("../../../Gilroy-SemiBold.f3ed44cd.ttf");
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: gilroy-medium;
-  user-select: none;
-  font-weight: 100;
-  letter-spacing: 0.1px;
-}
-
- html,body {
-  height: 100%;
-  width: 100%;
-  background-color: #123;
-
-}
-
-.loader{
-    height: 100%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: 50%;
-    left:50%;
-    transform: translate(-50%,-50%); 
-    background-color:white;
-    z-index: 100;
-   
-}
 
 .main{
   height: 100vh;
@@ -75,6 +31,9 @@
     background: #000;
     border-radius: 100%;
     border: 2px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .bar{
     background-color: white;
@@ -116,8 +75,6 @@
 }
 .dynamic{ 
     width: calc(100% - 18em);
-    /* width: 100%; */
-    flex-shrink: 100;
 }
 
 @media (max-width:700px) {
@@ -125,6 +82,9 @@
     
         width: 100%;
         height: 100%;
+    }
+    .screen{
+        justify-content: center;
     }
     
 }

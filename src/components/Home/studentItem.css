@@ -1,13 +1,4 @@
-* {
-  margin: 0;
-  padding: 0;
-box-sizing: border-box;
-}
 
- html,body {
-  height: 100%;
-  width: 100%;
-}
 
 .studentItem{
     display: flex;
@@ -41,6 +32,7 @@ box-sizing: border-box;
     border: none;
     color: white;
     font-size: medium;
+   
 }
 .studentItem .middle .icon{
     font-size: xx-large;
@@ -54,20 +46,7 @@ box-sizing: border-box;
     gap: 0.5em;
     width: 100%;
 }
-/* .studentItem .right input[type="radio"]{
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    padding:0.5em; 
-    border-radius: 50%;
-    border: 1px solid red;
-    cursor: pointer;
-} */
 
-/* .studentItem .right input[type="radio"]:hover{
-    background-color: red;
-    border: 2px solid red;
-} */
 .studentItem .left button{
     border-radius: 10px;
     background-color: black;
@@ -108,9 +87,7 @@ box-sizing: border-box;
     .studentItem .middle .icon{
         font-size:x-large;
     }
-    .studentItem .middle .sttext{
-        font-size: small;
-    }
+ 
     .studentItem .right label{
         display: flex;
         align-items: center;
