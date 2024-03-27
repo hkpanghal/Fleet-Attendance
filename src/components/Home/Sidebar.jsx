@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import {NavLink} from "react-router-dom";
 import { setDisplay } from "../../utils/handleSidebar";
 import image from '../../assets/applogo.png'
@@ -13,7 +13,20 @@ const activeStyle = {
 function Sidebar() {
 
 
+  const comp = useRef(null)
 
+  useEffect(() => {
+    if(comp.current){
+      const t = gsap.timeline()
+      t.from(".nli-anim",{
+        opacity:0,
+        scale:0.5,
+        duration:0.2,
+        delay:0.2,
+        stagger:0.2,
+      })
+    }
+  },[useRef])
   const handleSidebar = () => {
 
     
@@ -25,9 +38,9 @@ function Sidebar() {
   };
 
   return (
-    <div className="main sidebar-main sidebar">
+    <div className="main sidebar-main sidebar" ref={comp}>
       <div className="sidebar-upper-part">
-        <div className="sidebar-upper-part-arrow" onClick={handleSidebar}>
+        <div className="sidebar-upper-part-arrow nli-anim" onClick={handleSidebar}>
         «
         </div>
         <div className="sidebar-upper-part-logo">
@@ -38,10 +51,10 @@ function Sidebar() {
 
       <div className="sidebar-lower-part">
         <ol>
-          <li ><NavLink className="navLink" to={`/`} style={({isActive}) => isActive? activeStyle: {background:"#123"}  }>Classes</NavLink></li>
-          <li ><NavLink className="navLink" to={`/History`} style={({isActive}) => isActive? activeStyle: {background:"#123"}  }>History</NavLink></li>
-          <li ><NavLink className="navLink" to={`/Profile`} style={({isActive}) => isActive? activeStyle: {background:"#123"} }>Profile</NavLink></li>
-          <li ><NavLink className="navLink" to={`/Logout`}   style={({isActive}) => isActive? activeStyle: {background:"#123"} }>Log out</NavLink></li>
+          <li className="nli-anim"><NavLink className="navLink" to={`/`} style={({isActive}) => isActive? activeStyle: {background:"#123"}  }>Classes</NavLink></li>
+          <li className="nli-anim" ><NavLink className="navLink" to={`/History`} style={({isActive}) => isActive? activeStyle: {background:"#123"}  }>History</NavLink></li>
+          <li className="nli-anim"><NavLink className="navLink" to={`/Profile`} style={({isActive}) => isActive? activeStyle: {background:"#123"} }>Profile</NavLink></li>
+          <li className="nli-anim"><NavLink className="navLink" to={`/Logout`}   style={({isActive}) => isActive? activeStyle: {background:"#123"} }>Log out</NavLink></li>
         </ol>
        
       </div>

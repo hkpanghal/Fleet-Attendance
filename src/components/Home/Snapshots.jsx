@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchAttendances } from "../../Slices/attendanceSlice";
@@ -7,6 +7,9 @@ import SnapItem from "./SnapItem";
 import "../Home/SnapShots.css"
 
 function Snapshots() {
+
+  const comp = useRef(null)
+
   const { class_id, user_id } = useParams();
   const dispatch = useDispatch();
   const historyData = useSelector((state) => state.attendance.data);
@@ -16,13 +19,28 @@ function Snapshots() {
     dispatch(fetchAttendances({ class_id, user_id }));
   }, []);
 
+
+  useEffect(() => {
+    if(comp.current){
+     
+      const t = gsap.timeline()
+      t.from(".spi-anim",{
+        opacity:0,
+        scale:0.5,
+        duration:0.5,
+        delay:0.2
+      })
+    }
+  },[isLoading])
+
   if (isLoading) {
     return <Loader />;
   }
 
+
   return (
     
-    <div className="snapshot dynamic">
+    <div className="snapshot dynamic" ref={comp}>
     
         {
             historyData && historyData.map((data) =>(

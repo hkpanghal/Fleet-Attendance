@@ -27,7 +27,7 @@ function App() {
     return <Loader />;
   }
 
-  return isLoggedIn ? <AppStack /> : <AuthStack />;
+  return isLoggedin ? <AppStack /> : <AuthStack />;
 }
 
 export default App;

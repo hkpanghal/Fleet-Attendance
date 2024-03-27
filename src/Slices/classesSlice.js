@@ -19,6 +19,7 @@ export const fetchClasses = createAsyncThunk("fetchClasses" , async (user_id) =>
         
         }
     }).catch((err) => {
+
         console.log(err)
     })
 
@@ -68,11 +69,12 @@ export const classSlice = createSlice({
     extraReducers:(builder) => {
         builder.addCase(fetchClasses.fulfilled, (state,action) => {
             state.isLoading = false;
-          
             state.classes = action.payload
         })
         builder.addCase(fetchClasses.rejected, (state,action) => {
-           
+            console.log("rejected")
+           state.isError = true
+           state.isLoading = false
         })
         builder.addCase(fetchClasses.pending, (state,action) => {
             state.isLoading = true;

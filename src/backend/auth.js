@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 const ipAddress = "192.168.153.5"
-// const ipAddress = "192.168.43.184"
+// const ipAddress = "192.168.253.5"
 export const signin = async (email,password) =>{
     try {
         const res = await axios.post(`http://${ipAddress}:9000/api/user/signin`,{
@@ -34,4 +34,33 @@ export const signup = async (first_name,last_name,email,password,confirm_passwor
         throw error
     }
 
+}
+
+
+export const forgotPassword = async (email) => {
+    // console.log(email)
+    try {
+        const res = await axios.post(`http://${ipAddress}:9000/api/user/forgotpassword`,{
+            email
+        })
+        return res
+    } catch (error) {
+        throw error
+        
+    }
+}
+export const resetPassword = async (token,new_password,confirm_new_password) => {
+   
+    try {
+        const res = await axios.post(`http://${ipAddress}:9000/api/user/resetpassword`,{
+            token,
+            new_password,
+            confirm_new_password
+        })
+        return res
+    } catch (error) {
+       
+        throw error
+        
+    }
 }

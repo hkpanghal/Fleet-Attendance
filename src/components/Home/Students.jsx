@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Students.css";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -16,6 +16,8 @@ import { addAttendanceToDb } from "../../backend/backend";
 import Loader from "./Loader";
 
 function Students() {
+
+  const comp = useRef(null)
 
   const { class_id, class_name } = useParams();
   const dispatch = useDispatch();
@@ -87,6 +89,19 @@ function Students() {
 
 
   useEffect(() => {
+    if(comp.current){
+      const t = gsap.timeline()
+      t.from(".sli-anim",{
+        opacity:0,
+        duration:0.5,
+        delay:0.2,
+        stagger:0.2,
+        scale:0
+      })
+    }
+  },[isLoading])
+
+  useEffect(() => {
     // Add event listener when the component mounts
     window.addEventListener("keydown", handleKeyPress);
 
@@ -94,8 +109,7 @@ function Students() {
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [selectedStudent, students]); // Empty dependency array to run the effect only once
-
+  }, [selectedStudent, students]); // Empty dependency array to run the effect only once5
   useEffect(() => {
     dispatch(fetchStudents({ class_id, user_id: userDetails._id }));
   }, []);
@@ -106,11 +120,11 @@ function Students() {
 
 
   return (
-    <div className="students dynamic">
+    <div className="students dynamic"    ref={comp}>
       <StudentPopUp stpopup={stpopup} setStpopup={setStpopup} />
       <div className="upper-comp">
         <div className="uc-left">
-          <label htmlFor="">
+          <label htmlFor="" className="sli-anim">
             Subject :{" "}
             <input
               type="text"
@@ -119,14 +133,14 @@ function Students() {
               onChange={(e) => setSubject(e.target.value)}
             />
           </label>
-          <div className="uds">{Date(Date.now()).toLocaleString()}</div>
+          <div className="uds sli-anim">{Date(Date.now()).toLocaleString()}</div>
         </div>
         <div className="uc-right">
-          <div className="add-studentbtn">
+          <div className="add-studentbtn sli-anim">
             Add Student
             <button onClick={() => setStpopup(true)}>🧑+</button>
           </div>
-          <div className="ustbtns">
+          <div className="ustbtns sli-anim">
             Switch
             <button
               onClick={() =>
@@ -160,7 +174,8 @@ function Students() {
           students.map((student, index) => (
             <li
               key={student._id}
-              className={selectedStudent === index + 1 ? "selected" : ""}
+              className={selectedStudent === index + 1 ? "selected sli-anim" : "sli-anim"}
+           
             >
               <StudentItem student={student} />
             </li>
@@ -170,7 +185,7 @@ function Students() {
         )}
       </ol>
       <div
-        className="attendanceResult"
+        className="attendanceResult sli-anim"
         style={students.length ? { display: "flex" } : { display: "none" }}
       >
         <h2>Attendance Result</h2>

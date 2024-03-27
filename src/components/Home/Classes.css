@@ -4,7 +4,7 @@
     position: relative;
     height: fit-content;
     color: white;
-
+    /* overflow-x: hidden; */
 }
 
 .classes ol{

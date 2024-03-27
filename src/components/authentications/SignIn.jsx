@@ -46,7 +46,7 @@ function SignIn() {
     .catch((error) => {
       console.log(error)
       setIsLoading(false)
-      setErr("Some error occurred while signing in")
+      setErr("invalid email or password")
     })
             
   }
@@ -70,7 +70,7 @@ function SignIn() {
         <button type="submit" onClick={signInUser} >Sign In</button>
     </form>
      <div className='bottom-area'>
-      <button onClick={()=> navigate("/SignUp")}>forgot password?</button>
+      <button onClick={()=> navigate("/ForgotPassword")}>forgot password?</button>
      </div>
       <p>{err}</p>
     </div>

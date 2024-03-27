@@ -14,7 +14,7 @@ function SnapItem({ elem }) {
 
     
   return (
-    <div className="snapitem-container">
+    <div className="snapitem-container spi-anim">
       <details>
         <summary className="summary" ><span>{elem.subject_name}</span><span>{formattedDateTime}</span></summary>
         <div>

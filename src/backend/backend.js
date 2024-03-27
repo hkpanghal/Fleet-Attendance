@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 const ipAddress = '192.168.153.5'
-// const ipAddress = '192.168.43.184'
+// const ipAddress = '192.168.253.5'
 
 
 export const addClassToDb = async (class_name,created_by) => {

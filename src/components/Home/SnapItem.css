@@ -7,7 +7,6 @@
     border: 2px solid rebeccapurple;
     border-radius: 10px;
     box-shadow: 8px 8px 10px black;
-    transition: all ease 0.5s;
 
 }
 
@@ -16,7 +15,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    transition: all ease 0.5s;
+   
 
 
 }
