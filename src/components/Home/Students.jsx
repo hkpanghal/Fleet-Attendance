@@ -44,7 +44,7 @@ function Students() {
     const { key } = event;
 
     let screen =  document.querySelector(".screen")
-    event.preventDefault();
+    // event.preventDefault();
     if (key === 'ArrowLeft' || key === 'ArrowRight') {
       const scrollAmount = key === 'ArrowRight' ? 80 : -80;
       screen.scrollBy({
