@@ -1,6 +1,7 @@
-import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdf from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
+let pdfMake = pdf
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 function generateAttendancePDF(attendanceData,className,subject) {
