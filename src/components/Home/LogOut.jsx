@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import "./LogOut.css"
+import "./Logout.css"
 import { authContext } from '../../Contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
