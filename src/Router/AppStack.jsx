@@ -15,7 +15,7 @@ const AppStack = () => {
                 
                 <Route path='/' element={<Home />}>
                     <Route path='/' element={<Classes/>}/>
-                    <Route path='/students/:class_id/:class_name' element={<Students/>}/>
+                    <Route path='/Students/:class_id/:class_name' element={<Students/>}/>
                     <Route path='/History' element={<History/>}/>
                     <Route path='/SnapShots/:class_id/:user_id' element={<Snapshots />}/>
                     <Route path='/Profile' element={<Profile />}/>

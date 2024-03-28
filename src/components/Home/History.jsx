@@ -27,6 +27,8 @@ function History() {
     }
     
   },[comp])
+
+
   return (
     <>
       <div className="history dynamic" ref={comp}>

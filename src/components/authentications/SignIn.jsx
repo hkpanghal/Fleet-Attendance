@@ -23,7 +23,6 @@ function SignIn() {
     try {
       await localStorage.setItem(key, JSON.stringify(value));
       dispatch(fetchDetails())
-      console.log('Data stored successfully!');
     } catch (error) {
       console.log('Error storing data: ' + error);
     }

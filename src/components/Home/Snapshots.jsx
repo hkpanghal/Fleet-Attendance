@@ -25,10 +25,11 @@ function Snapshots() {
      
       const t = gsap.timeline()
       t.from(".spi-anim",{
+        duration:0.5,
+        delay:0.2,
         opacity:0,
         scale:0.5,
-        duration:0.5,
-        delay:0.2
+        stagger:0.2
       })
     }
   },[isLoading])
@@ -40,6 +41,7 @@ function Snapshots() {
 
   return (
     
+    historyData.length &&
     <div className="snapshot dynamic" ref={comp}>
     
         {

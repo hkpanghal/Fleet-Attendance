@@ -1,13 +1,11 @@
 import axios from "axios";
 
-
-const ipAddress = '192.168.153.5'
-// const ipAddress = '192.168.253.5'
+const url="https://fleet-attendance-backend.onrender.com"
 
 
 export const addClassToDb = async (class_name,created_by) => {
     try {
-        const res = await axios.post(`http://${ipAddress}:9000/api/classes/createclass`,{
+        const res = await axios.post(`${url}/api/classes/createclass`,{
             class_name:class_name,
             user_id:created_by
         })
@@ -15,6 +13,7 @@ export const addClassToDb = async (class_name,created_by) => {
     } catch (error) {
  
         throw error
+
     }
 
    
@@ -23,7 +22,7 @@ export const addClassToDb = async (class_name,created_by) => {
 export const gtAllClasses = async (user_id) => {
     try {
     
-        const res = await axios.post(`http://${ipAddress}:9000/api/classes/`,{
+        const res = await axios.post(`${url}/api/classes/`,{
             user_id:user_id
         })
         return res 
@@ -34,7 +33,7 @@ export const gtAllClasses = async (user_id) => {
 }
 export const updateClassNameToDb = async (class_id,user_id,class_name) => {
     try {
-        const res = await axios.patch(`http://${ipAddress}:9000/api/classes/renameclass`,{
+        const res = await axios.patch(`${url}/api/classes/renameclass`,{
             class_id:class_id,
             user_id:user_id,
             class_name:class_name
@@ -48,7 +47,7 @@ export const updateClassNameToDb = async (class_id,user_id,class_name) => {
 export const addStudentToDb = async (class_id,user_id,first_name,last_name,roll_number) => {
     try {
     
-        const res = await axios.post(`http://${ipAddress}:9000/api/students/createstudent`,{
+        const res = await axios.post(`${url}/api/students/createstudent`,{
            class_id:class_id,
            user_id:user_id,
            first_name:first_name,
@@ -65,7 +64,7 @@ export const addStudentToDb = async (class_id,user_id,first_name,last_name,roll_
 export const getAllStudents = async (class_id,user_id) => {
     try {
     
-        const res = await axios.post(`http://${ipAddress}:9000/api/students/`,{
+        const res = await axios.post(`${url}/api/students/`,{
            class_id:class_id,
            user_id:user_id,
          
@@ -79,7 +78,7 @@ export const getAllStudents = async (class_id,user_id) => {
 
 export const updateStudentDetailsToDb = async (student_id,user_id,first_name,last_name,roll_number) => {
     try {
-        const res = await axios.patch(`http://${ipAddress}:9000/api/students/updatestudent`,{
+        const res = await axios.patch(`${url}/api/students/updatestudent`,{
             student_id,
             user_id,
             first_name,
@@ -97,7 +96,7 @@ export const updateStudentDetailsToDb = async (student_id,user_id,first_name,las
 export const deleteStudentFromDb = async (class_id,student_id) => {
 
     try {
-        const res = await axios.delete(`http://${ipAddress}:9000/api/students/deletestudent/${class_id}/${student_id}`)
+        const res = await axios.delete(`${url}/api/students/deletestudent/${class_id}/${student_id}`)
         return res
     } catch (error) {
         throw error
@@ -106,7 +105,7 @@ export const deleteStudentFromDb = async (class_id,student_id) => {
 export const addAttendanceToDb = async (class_id,user_id,students,subject) => {
     try {
     
-        const res = await axios.post(`http://${ipAddress}:9000/api/attendance/createattendance`,{
+        const res = await axios.post(`${url}/api/attendance/createattendance`,{
            class_id:class_id,
            created_by:user_id,
            students:students,
@@ -121,7 +120,7 @@ export const addAttendanceToDb = async (class_id,user_id,students,subject) => {
 export const getAllAttendanceData = async (class_id,user_id) => {
     try {
     
-        const res = await axios.post(`http://${ipAddress}:9000/api/attendance/`,{
+        const res = await axios.post(`${url}/api/attendance/`,{
            class_id:class_id,
            user_id:user_id,
          

@@ -41,7 +41,7 @@ export default function Classes() {
 
  
 if(isLoading){
-  return <div></div>
+  return <Loader/>
 }
 
   return (

@@ -77,6 +77,7 @@
 }
 .dynamic{ 
     width: calc(100% - 18em);
+    position: relative;
 }
 
 @media (max-width:700px) {

@@ -18,7 +18,7 @@ const ClassItem = ({ elem }) => {
 
   const handleRenameClass = () => {
     setIsLoading(true);
-
+    
     updateClassNameToDb(elem._id, elem.created_by, class_name.trim())
       .then((res) => {
         if (res.data.success) {
@@ -44,7 +44,6 @@ const ClassItem = ({ elem }) => {
   const handleSetEditable = () => {
     
     const isConfirmed = confirm("Don't forget to save")
-    console.log(isConfirmed)
     if(isConfirmed){
         setContentEditable(true)
     }
@@ -59,6 +58,7 @@ const ClassItem = ({ elem }) => {
           onChange={(e) => setClass_name(e.target.value)}
           value={class_name}
           placeholder="enter name and save"
+          style={contentEditable ? {border:"2px solid red"} :{}}
         />
         <div className="btns">
           <button
@@ -82,7 +82,7 @@ const ClassItem = ({ elem }) => {
       </div>
       <div
         className="students-section"
-        onClick={() => navigate(`/students/${elem._id}/${elem.class_name}`)}
+        onClick={() => navigate(`/Students/${elem._id}/${elem.class_name}`)}
       >
         <p className="st-logo">🧑‍🎓⟫ </p>
         <p style={{ fontSize: "x-small" }}>Total : {elem.students.length}</p>

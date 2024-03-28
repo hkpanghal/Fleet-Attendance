@@ -24,7 +24,7 @@ function App() {
   }, [isLoading]);
 
   if (isLoading) {
-    return <Loader />;
+    return <Loader />
   }
 
   return isLoggedin ? <AppStack /> : <AuthStack />;

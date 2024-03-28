@@ -43,18 +43,26 @@ function Students() {
   const handleKeyPress = (event) => {
     const { key } = event;
 
-    // Handle key presses (e.g., arrow up and arrow down)
-    // event.preventDefault();
+    let screen =  document.querySelector(".screen")
+    event.preventDefault();
+    if (key === 'ArrowLeft' || key === 'ArrowRight') {
+      const scrollAmount = key === 'ArrowRight' ? 80 : -80;
+      screen.scrollBy({
+        top: scrollAmount,
+        behavior: 'smooth'
+      });
+    }
 
-    if (key === "w" || key === "a") {
+
+    if (key === "ArrowLeft") {
       // Move selection up
-
       setSelectedStudent((prev) => (prev > 1 ? prev - 1 : prev));
+   
       // console.log(selectedStudent)
-    } else if (key === "s" || key === "d") {
+    } else if (key === "ArrowRight") {
       // Move selection down
       setSelectedStudent((prev) => (prev < students.length ? prev + 1 : prev));
-    } else if (students.length && key === "Enter") {
+    } else if (students.length && key === "Tab") {
       if (selectedStudent) {
         const sid = students[selectedStudent - 1]._id;
         const isPresent = !students[selectedStudent - 1].is_present;
@@ -120,7 +128,7 @@ function Students() {
 
 
   return (
-    <div className="students dynamic"    ref={comp}>
+    <div className="students dynamic"    ref={comp} >
       <StudentPopUp stpopup={stpopup} setStpopup={setStpopup} />
       <div className="upper-comp">
         <div className="uc-left">

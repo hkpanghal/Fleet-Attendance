@@ -2,9 +2,6 @@ import React, { useEffect, useRef } from 'react'
 import "./HistoryCard.css"
 import { useNavigate } from 'react-router-dom'
 function HistoryCard({data}) {
-
- 
-
   const navigate = useNavigate()
   return (
     <div className='historyCard hli-anim' onClick={() => navigate(`/SnapShots/${data._id}/${data.created_by}`)}>
