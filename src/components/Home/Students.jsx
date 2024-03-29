@@ -14,7 +14,8 @@ import SuccessMessage from "./SuccessMessage";
 import { fetchStudents } from "../../Slices/studentsSlice";
 import { addAttendanceToDb } from "../../backend/backend";
 import Loader from "./Loader";
-
+import StudentsPDF from "../../utils/StudentsPdf";
+import { Document, Page, pdf } from '@react-pdf/renderer';
 function Students() {
 
   const comp = useRef(null)
@@ -35,6 +36,26 @@ function Students() {
   students = [...students1];
   const isLoading = useSelector((state) => state.student.isLoading);
   
+  
+  const handleDownloadPdf =  () => {
+    const pdfContent = (
+      <Document>
+          <StudentsPDF students={students} className={class_name} subjectName={subject} totalPresent={calculateIsPresent()} totalAbsent={students.length - calculateIsPresent()}/>
+      </Document>
+    );
+    pdf(pdfContent).toBlob().then((blob) => {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'student_list.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    });
+  }
+
+
   function calculateIsPresent() {
     return students.filter((student) => student.is_present !== false).length;
   }
@@ -44,7 +65,7 @@ function Students() {
     const { key } = event;
 
     let screen =  document.querySelector(".screen")
-    // event.preventDefault();
+
     if (key === 'ArrowLeft' || key === 'ArrowRight') {
       const scrollAmount = key === 'ArrowRight' ? 80 : -80;
       screen.scrollBy({
@@ -63,6 +84,7 @@ function Students() {
       // Move selection down
       setSelectedStudent((prev) => (prev < students.length ? prev + 1 : prev));
     } else if (students.length && key === "Tab") {
+       event.preventDefault()
       if (selectedStudent) {
         const sid = students[selectedStudent - 1]._id;
         const isPresent = !students[selectedStudent - 1].is_present;
@@ -129,6 +151,7 @@ function Students() {
 
   return (
     <div className="students dynamic"    ref={comp} >
+      
       <StudentPopUp stpopup={stpopup} setStpopup={setStpopup} />
       <div className="upper-comp">
         <div className="uc-left">
@@ -221,7 +244,7 @@ function Students() {
             <button
               onClick={() =>
                 subject
-                  ? (generateAttendancePDF(students, class_name, subject),
+                  ? (handleDownloadPdf(),
                     setSuccessMessageDisplay("flex"),
                     setSuccessMessage("All done"))
                   : (setSuccessMessageDisplay("flex"),
@@ -247,6 +270,8 @@ function Students() {
         display={successMessageDisplay}
         setDisplay={setSuccessMessageDisplay}
       />
+
+      
     </div>
   );
 }
