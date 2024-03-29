@@ -6,7 +6,6 @@ import StudentItem from "./StudentItem";
 import StudentPopUp from "./StudentPopUp";
 import { useParams } from "react-router-dom";
 import { switchIsPresent } from "../../Slices/studentsSlice";
-import { generateAttendancePDF } from "../../utils/downloadAttemdancePdf";
 import addStudentImage from "../../assets/addStudent.jpg";
 import { markIsPresent } from "../../Slices/studentsSlice";
 import Helper from "./Helper";
@@ -14,8 +13,8 @@ import SuccessMessage from "./SuccessMessage";
 import { fetchStudents } from "../../Slices/studentsSlice";
 import { addAttendanceToDb } from "../../backend/backend";
 import Loader from "./Loader";
-import StudentsPDF from "../../utils/StudentsPdf";
 import { Document, Page, pdf } from '@react-pdf/renderer';
+import StudentsPDF from "../../utils/StudentsPDF";
 function Students() {
 
   const comp = useRef(null)
