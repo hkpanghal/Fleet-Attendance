@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./Students.css";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -13,11 +13,10 @@ import SuccessMessage from "./SuccessMessage";
 import { fetchStudents } from "../../Slices/studentsSlice";
 import { addAttendanceToDb } from "../../backend/backend";
 import Loader from "./Loader";
-import { Document, Page, pdf } from '@react-pdf/renderer';
+import { Document, Page, pdf } from "@react-pdf/renderer";
 import StudentsPDF from "../../utils/StudentsPDF";
 function Students() {
-
-  const comp = useRef(null)
+  const comp = useRef(null);
 
   const { class_id, class_name } = useParams();
   const dispatch = useDispatch();
@@ -27,63 +26,68 @@ function Students() {
   const [successMessage, setSuccessMessage] = useState("");
   const [stpopup, setStpopup] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(0);
-  
+
   const userDetails = useSelector((state) => state.user.details);
-  let students = useSelector((state) => state.student.students);
-  let students1 = [...students];
-  students1.sort((a, b) => (a.roll_number > b.roll_number ? 1 : -1));
-  students = [...students1];
+  const students = useSelector((state) => state.student.students);
   const isLoading = useSelector((state) => state.student.isLoading);
-  
-  
-  const handleDownloadPdf =  () => {
+
+  const handleDownloadPdf = () => {
     const pdfContent = (
       <Document>
-          <StudentsPDF students={students} className={class_name} subjectName={subject} totalPresent={calculateIsPresent()} totalAbsent={students.length - calculateIsPresent()}/>
+        <StudentsPDF
+          students={students}
+          className={class_name}
+          subjectName={subject}
+          totalPresent={calculateIsPresent()}
+          totalAbsent={students.length - calculateIsPresent()}
+        />
       </Document>
     );
-    pdf(pdfContent).toBlob().then((blob) => {
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'student_list.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-    });
-  }
+    pdf(pdfContent)
+      .toBlob()
+      .then((blob) => {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "student_list.pdf";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      });
+  };
 
+  const presentStudents = useMemo(() => {
+    return students.filter((student) => student.is_present === true).length;
+  }, [students]);
 
-  function calculateIsPresent() {
-    return students.filter((student) => student.is_present !== false).length;
-  }
-
+  const totalStudents = useMemo(() => {
+    return students.length;
+  }, [students.length]);
 
   const handleKeyPress = (event) => {
     const { key } = event;
 
-    let screen =  document.querySelector(".screen")
+    let screen = document.querySelector(".screen");
 
-    if (key === 'ArrowLeft' || key === 'ArrowRight') {
-      const scrollAmount = key === 'ArrowRight' ? 80 : -80;
+    if (key === "ArrowLeft" || key === "ArrowRight") {
+      const scrollAmount = key === "ArrowRight" ? 80 : -80;
       screen.scrollBy({
         top: scrollAmount,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     }
-
 
     if (key === "ArrowLeft") {
       // Move selection up
       setSelectedStudent((prev) => (prev > 1 ? prev - 1 : prev));
-   
+
       // console.log(selectedStudent)
     } else if (key === "ArrowRight") {
       // Move selection down
       setSelectedStudent((prev) => (prev < students.length ? prev + 1 : prev));
     } else if (students.length && key === "Tab") {
-       event.preventDefault()
+      event.preventDefault();
       if (selectedStudent) {
         const sid = students[selectedStudent - 1]._id;
         const isPresent = !students[selectedStudent - 1].is_present;
@@ -92,43 +96,38 @@ function Students() {
     }
   };
 
-
   const handleCreateAttendance = () => {
-
-    if(!subject){
-      setSuccessMessage("Subject field is empty")
-      setSuccessMessageDisplay("flex")
-      return
+    if (!subject) {
+      setSuccessMessage("Subject field is empty");
+      setSuccessMessageDisplay("flex");
+      return;
     }
 
-    
-    addAttendanceToDb(class_id,userDetails._id,students,subject)
-    .then((res) => {
-      if(res.data.success){
-        setSuccessMessage("All done"),
-        setSuccessMessageDisplay("flex")
-      }
-    })
-    .catch((err) => {
-      console.log(err)
-      setSuccessMessage("some error occurred while saving attendance."),
-      setSuccessMessageDisplay("flex")
-    })
-  }
-
+    addAttendanceToDb(class_id, userDetails._id, students, subject)
+      .then((res) => {
+        if (res.data.success) {
+          setSuccessMessage("All done"), setSuccessMessageDisplay("flex");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setSuccessMessage("some error occurred while saving attendance."),
+          setSuccessMessageDisplay("flex");
+      });
+  };
 
   useEffect(() => {
-    if(comp.current){
-      const t = gsap.timeline()
-      t.from(".sli-anim",{
-        opacity:0,
-        duration:0.5,
-        delay:0.2,
-        stagger:0.2,
-        scale:0
-      })
+    if (comp.current) {
+      const t = gsap.timeline();
+      t.from(".sli-anim", {
+        opacity: 0,
+        duration: 0.5,
+        delay: 0.2,
+        stagger: 0.2,
+        scale: 0,
+      });
     }
-  },[isLoading])
+  }, [isLoading]);
 
   useEffect(() => {
     // Add event listener when the component mounts
@@ -143,14 +142,12 @@ function Students() {
     dispatch(fetchStudents({ class_id, user_id: userDetails._id }));
   }, []);
 
-  if(isLoading){
-    return <Loader />
+  if (isLoading) {
+    return <Loader />;
   }
 
-
   return (
-    <div className="students dynamic"    ref={comp} >
-      
+    <div className="students dynamic" ref={comp}>
       <StudentPopUp stpopup={stpopup} setStpopup={setStpopup} />
       <div className="upper-comp">
         <div className="uc-left">
@@ -163,7 +160,9 @@ function Students() {
               onChange={(e) => setSubject(e.target.value)}
             />
           </label>
-          <div className="uds sli-anim">{Date(Date.now()).toLocaleString()}</div>
+          <div className="uds sli-anim">
+            {Date(Date.now()).toLocaleString()}
+          </div>
         </div>
         <div className="uc-right">
           <div className="add-studentbtn sli-anim">
@@ -204,10 +203,11 @@ function Students() {
           students.map((student, index) => (
             <li
               key={student._id}
-              className={selectedStudent === index + 1 ? "selected sli-anim" : "sli-anim"}
-           
+              className={
+                selectedStudent === index + 1 ? "selected sli-anim" : "sli-anim"
+              }
             >
-              <StudentItem student={student} />
+              <StudentItem student={student} index={index} />
             </li>
           ))
         ) : (
@@ -225,17 +225,17 @@ function Students() {
               <p>
                 <span>🙂Present</span>
                 <span>:</span>
-                <span>{calculateIsPresent()}</span>
+                <span>{presentStudents}</span>
               </p>
               <p>
                 <span>😟Absent</span>
                 <span>:</span>
-                <span>{students.length - calculateIsPresent()}</span>
+                <span>{totalStudents - presentStudents}</span>
               </p>
               <p>
                 <span>🤙Total</span>
                 <span> :</span>
-                <span>{students.length}</span>
+                <span>{totalStudents}</span>
               </p>
             </div>
           </div>
@@ -252,14 +252,7 @@ function Students() {
             >
               Take PDF 📂
             </button>
-            <button
-              onClick={() => (
-                handleCreateAttendance()
-               
-              )}
-            >
-              Save to db
-            </button>
+            <button onClick={() => handleCreateAttendance()}>Save to db</button>
           </div>
         </div>
       </div>
@@ -269,8 +262,6 @@ function Students() {
         display={successMessageDisplay}
         setDisplay={setSuccessMessageDisplay}
       />
-
-      
     </div>
   );
 }

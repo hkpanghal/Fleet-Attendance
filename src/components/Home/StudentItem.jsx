@@ -7,7 +7,7 @@ import { delelemStudentArray } from '../../Slices/classesSlice'
 import { useParams } from 'react-router-dom'
 import { deleteStudentFromDb, updateStudentDetailsToDb } from '../../backend/backend'
 
-const StudentItem = ({student}) => {
+const StudentItem = ({student,index}) => {
   const [stname,setStname] = useState(student.first_name + " " + student.last_name)
   const [strollnumber,setStrollnumber] = useState(student.roll_number)
   const dispatch = useDispatch()
@@ -33,7 +33,8 @@ const StudentItem = ({student}) => {
             student_id:student._id,
             first_name,
             last_name,
-            roll_number:strollnumber
+            roll_number:strollnumber,
+            index
         }
 
         setIsLoading(true)
@@ -93,8 +94,8 @@ const handleDeleteStudent = () =>{
          </div>
       </div>
       <div className="right pabtns">
-        <label htmlFor="">Present<input type="radio"  checked={student.is_present}  onChange={()=> dispatch(markIsPresent({_id:student._id,is_present:true}))}  /></label>
-        <label htmlFor="">Absent<input type="radio"   checked={!student.is_present} onChange={()=> dispatch(markIsPresent({_id:student._id,is_present:false}))}  /></label>
+        <label htmlFor="">Present<input type="radio"  checked={student.is_present}  onChange={()=> dispatch(markIsPresent({_id:student._id,is_present:true,index}))}  /></label>
+        <label htmlFor="">Absent<input type="radio"   checked={!student.is_present} onChange={()=> dispatch(markIsPresent({_id:student._id,is_present:false,index}))}  /></label>
       </div>
     </div>
   )

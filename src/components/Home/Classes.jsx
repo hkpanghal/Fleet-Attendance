@@ -36,7 +36,10 @@ export default function Classes() {
   },[isLoading])
 
   useEffect(() => {
-    dispatch(fetchClasses(userDetails._id));
+    if(Classes.length <= 0){
+
+      dispatch(fetchClasses(userDetails._id));
+    }
   },[]);
 
  

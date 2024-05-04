@@ -1,6 +1,7 @@
 import { createSlice,nanoid } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getAllStudents } from "../backend/backend.js";
+import { sortStudents } from "../Store/operations.js";
 
 const initialState = {
     students:[],
@@ -10,12 +11,13 @@ const initialState = {
 
 export const fetchStudents = createAsyncThunk("fetchStudents", async ({class_id,user_id}) => {
 
-    // console.log(class_id,user_id)
+    
     let data = []
     await getAllStudents(class_id,user_id)
-    .then((res) => {
-        // console.log(res.data.students)
+    .then( async (res) => {
+     
         if(res.data.success){
+            await sortStudents(res.data.students)
             data = res.data.students
         }
     })
@@ -34,18 +36,25 @@ export const studentSlice = createSlice({
         addStudent: (state,action) => {
          
             state.students.push(action.payload.data);
+            sortStudents(state.students)
         },
         deleteStudent:  (state,action) => {
             
             state.students = state.students.filter((student) => student._id !== action.payload.student_id)
-            
+            sortStudents(state.students)
         },
 
      
         updateStudent:(state,action)=>{
 
             // console.log(action.payload.student_id,action.payload.first_name,action.payload.last_name,action.payload.roll_number)
-            state.students.map((student) => student._id === action.payload.student_id ? (student.first_name = action.payload.first_name,student.last_name=action.payload.last_name,student.roll_number=action.payload.roll_number) : student)
+            // state.students.map((student) => student._id === action.payload.student_id ? (student.first_name = action.payload.first_name,student.last_name=action.payload.last_name,student.roll_number=action.payload.roll_number) : student)
+
+            if(state.students[action.payload.index]._id === action.payload._id){
+                state.students[action.payload.index].first_name = action.payload.first_name  
+                state.students[action.payload.index].last_name = action.payload.last_name  
+                state.students[action.payload.index].roll_number = action.payload.roll_number  
+            }
 
         },
         switchIsPresent:(state,action) =>{
@@ -61,7 +70,7 @@ export const studentSlice = createSlice({
         
         deleteStudentsWhenClassIsDeleted:(state,action) => {
             state.students = state.students.filter((student) => student.cid !== action.payload.cid);
-            localStorage.setItem("students",JSON.stringify(state.students));
+            
 
         },
 
